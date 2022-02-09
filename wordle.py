@@ -60,14 +60,13 @@ def display_user_guess(user_guess, wordle_word):
 def wordle(wordle_word):
 
     guess_attempts = 6
-    print(wordle_word)
     print('Welcome to Wordle')
     print('Please enter a five lettter word! Guess correct letter, correct spot! = Green')
     print('Guess correct letter, wrong spot! = Yellow')
-    print('Guess the wrong letter! = Red. Good Luck!!!')
+    print('Guess the wrong letter! = Red.')
+    print('You have', guess_attempts, 'guesses. Good Luck!!!')
 
     while guess_attempts > 0:
-        print('You have', guess_attempts, 'left')
         user_guess = input('Enter a five letter word ').upper()
         if len(user_guess) != 5: 
             print('That was not a 5 letter word, please enter a five letter word!')
@@ -78,10 +77,14 @@ def wordle(wordle_word):
             if win(user_guess, wordle_word) == True:
                 print('Congratulation!! You have guessed', wordle_word,
                     'it took you', (6 - guess_attempts), 'guesses')
-            print(''.join(alphabet_list))
-            guess_attempts -= 1
-            if guess_attempts < 1:
-                print('Sorry, You ran out of guesses. The word was', wordle_word)
+                break
+            else:
+                print(''.join(alphabet_list))
+                guess_attempts -= 1
+                print('You have', guess_attempts,'guesses left!')
+                if guess_attempts < 1:
+                    print('Sorry, You ran out of guesses. The word was', wordle_word)
+                    break
 
 
 wordle_word = random.choice(word_list).decode('utf-8').upper()
