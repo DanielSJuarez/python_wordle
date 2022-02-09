@@ -20,12 +20,24 @@ with urllib.request.urlopen(URL) as response:
 
 
 def win(user_guess, wordle_word):
+    '''
+    user_guess and wordle_word are strings of the guessed word and answer
+    returns if the user guess matched the correct word
+    '''
+
     if user_guess == wordle_word:
         return True
     return False
 
 
 def update_available_alphabet(color_letter, value):
+
+    '''
+    color_letter: is the new color of the alphabet letter depending on the user guess
+    value is the letter being tested
+    updates the color values of the alphabet to show the user their guessed letters
+    '''
+
     global alphabet_list
     if value not in alphabet_list:
         return
@@ -36,6 +48,13 @@ def update_available_alphabet(color_letter, value):
 
 
 def display_user_guess(user_guess, wordle_word):
+
+    '''
+    wordle_word_list is a list of the answer
+    user_guess is a string of the current guessed submission by the user
+    returns an updated display of the user guess that is color sorted depending on correct value and index
+    '''
+
     global guess_display
     wordle_word_list = list(wordle_word)
     color_letter = ''
@@ -58,6 +77,11 @@ def display_user_guess(user_guess, wordle_word):
 
 
 def wordle(wordle_word):
+
+    '''
+    wordle_word is a string word that is always 5 letters long that the user is trying to guess
+    returns the user input, displays the guess attempts, calls all user visiual displays, and the win/loss statements
+    '''
 
     guess_attempts = 6
     print('Welcome to Wordle')
