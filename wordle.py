@@ -5,11 +5,13 @@ alphabet_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
                  'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 guess_display = ''
 
+
 class color:
     GREEN = '\033[92m'
     YELLOW = '\033[93m'
     WHITE = '\033[97m'
     RED = '\033[91m'
+
 
 URL = 'https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt'
 
@@ -23,11 +25,14 @@ def win(user_guess, wordle_word):
     return False
 
 
-def update_available_alphabet(color_letter ,value):
+def update_available_alphabet(color_letter, value):
     global alphabet_list
-    new_index = alphabet_list.index(value)
-    alphabet_list.pop(new_index) 
-    alphabet_list.insert(new_index, color_letter)
+    if value not in alphabet_list:
+        return
+    else:
+        new_index = alphabet_list.index(value)
+        alphabet_list.pop(new_index)
+        alphabet_list.insert(new_index, color_letter)
 
 
 def display_user_guess(user_guess, wordle_word):
@@ -57,19 +62,27 @@ def wordle(wordle_word):
     guess_attempts = 6
     print(wordle_word)
     print('Welcome to Wordle')
-    print('Please enter a five lettter word, letters that are right and in the correct spot will be colored green, right letters but in the incorrect spot will be yellow. Otherwise they will be not be made available to guess again. Good luck')
+    print('Please enter a five lettter word! Guess correct letter, correct spot! = Green')
+    print('Guess correct letter, wrong spot! = Yellow')
+    print('Guess the wrong letter! = Red. Good Luck!!!')
 
     while guess_attempts > 0:
-        print('You have', guess_attempts, 'remaining')
+        print('You have', guess_attempts, 'left')
         user_guess = input('Enter a five letter word ').upper()
-        print(display_user_guess(user_guess, wordle_word))
-        if win(user_guess, wordle_word) == True:
-            print('Congratulation!! You have guessed', wordle_word, 'it took you', (6 - guess_attempts), 'guesses')
-        print(''.join(alphabet_list))
-        guess_attempts -= 1
+        if len(user_guess) != 5: 
+            print('That was not a 5 letter word, please enter a five letter word!')
+        elif user_guess.isalpha() != True:
+            print('You have not entered all letter, please enter a five letter word!')
+        else:
+            print(display_user_guess(user_guess, wordle_word))
+            if win(user_guess, wordle_word) == True:
+                print('Congratulation!! You have guessed', wordle_word,
+                    'it took you', (6 - guess_attempts), 'guesses')
+            print(''.join(alphabet_list))
+            guess_attempts -= 1
+            if guess_attempts < 1:
+                print('Sorry, You ran out of guesses. The word was', wordle_word)
 
 
 wordle_word = random.choice(word_list).decode('utf-8').upper()
 wordle(wordle_word)
-
-print('Sorry, You ran out of guesses. The word was', wordle_word)
