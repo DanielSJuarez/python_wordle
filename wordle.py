@@ -3,13 +3,13 @@ import random
 
 alphabet_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
                  'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-
+guess_display = ''
 
 class color:
     GREEN = '\033[92m'
     YELLOW = '\033[93m'
     WHITE = '\033[97m'
-
+    RED = '\033[91m'
 
 URL = 'https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt'
 
@@ -23,25 +23,31 @@ def win(user_guess, wordle_word):
     return False
 
 
-def update_available_alphabet(value):
+def update_available_alphabet(color_letter ,value):
     global alphabet_list
-    alphabet_list.pop(alphabet_list.index(value))
+    new_index = alphabet_list.index(value)
+    alphabet_list.pop(new_index) 
+    alphabet_list.insert(new_index, color_letter)
 
 
 def display_user_guess(user_guess, wordle_word):
-    guess_display = ''
+    global guess_display
     wordle_word_list = list(wordle_word)
+    color_letter = ''
 
     for index, value in enumerate(user_guess):
         if value == wordle_word_list[index]:
-            correct_placement_letter = f'{color.GREEN} {value} {color.WHITE}'
-            guess_display += correct_placement_letter
+            color_letter = f'{color.GREEN}{value}{color.WHITE}'
+            guess_display += color_letter
+            update_available_alphabet(color_letter, value)
         elif value in wordle_word:
-            incorrect_placement_letter = f"{color.YELLOW} {value} {color.WHITE}"
-            guess_display += incorrect_placement_letter
+            color_letter = f"{color.YELLOW}{value}{color.WHITE}"
+            guess_display += color_letter
+            update_available_alphabet(color_letter, value)
         else:
             guess_display += value
-            update_available_alphabet(value)
+            color_letter = f"{color.RED}{value}{color.WHITE}"
+            update_available_alphabet(color_letter, value)
     guess_display += '\n'
     return guess_display
 
@@ -59,7 +65,7 @@ def wordle(wordle_word):
         print(display_user_guess(user_guess, wordle_word))
         if win(user_guess, wordle_word) == True:
             print('Congratulation!! You have guessed', wordle_word, 'it took you', (6 - guess_attempts), 'guesses')
-        print(alphabet_list)
+        print(''.join(alphabet_list))
         guess_attempts -= 1
 
 
