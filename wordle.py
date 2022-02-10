@@ -99,7 +99,7 @@ def wordle(wordle_word):
         else:
             print(display_user_guess(user_guess, wordle_word))
             if win(user_guess, wordle_word) == True:
-                print('Congratulation!! You have guessed', wordle_word,
+                print('Congratulations!! You have guessed ', wordle_word,
                     'it took you', (6 - guess_attempts), 'guesses')
                 break
             else:
@@ -107,7 +107,7 @@ def wordle(wordle_word):
                 guess_attempts -= 1
                 print('You have', guess_attempts,'guesses left!')
                 if guess_attempts < 1:
-                    print('Sorry, You ran out of guesses. The word was', wordle_word)
+                    print('Sorry, You ran out of guesses. The word was ', wordle_word)
                     break
 
 
