@@ -3,6 +3,7 @@ import random
 
 alphabet_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
                  'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+               
 guess_display = ''
 
 
@@ -39,12 +40,15 @@ def update_available_alphabet(color_letter, value):
     '''
 
     global alphabet_list
-    if value not in alphabet_list:
-        return
-    else:
-        new_index = alphabet_list.index(value)
-        alphabet_list.pop(new_index)
-        alphabet_list.insert(new_index, color_letter)
+    source_alphabet_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+                 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] 
+
+    # if value not in alphabet_list:
+    #     return
+    # else:
+    new_index = source_alphabet_list.index(value)
+    alphabet_list.pop(new_index)
+    alphabet_list.insert(new_index, color_letter)
 
 
 def display_user_guess(user_guess, wordle_word):
@@ -61,7 +65,7 @@ def display_user_guess(user_guess, wordle_word):
 
     for index, value in enumerate(user_guess):
         if value == wordle_word_list[index]:
-            color_letter = f'{color.GREEN}{value}{color.WHITE}'
+            color_letter = f"{color.GREEN}{value}{color.WHITE}"
             guess_display += color_letter
             update_available_alphabet(color_letter, value)
         elif value in wordle_word:
