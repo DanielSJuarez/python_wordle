@@ -103,6 +103,7 @@ def wordle(wordle_word):
         else:
             print(display_user_guess(user_guess, wordle_word))
             if win(user_guess, wordle_word) == True:
+                guess_attempts -= 1
                 print('Congratulations!! You have guessed ', wordle_word,
                     'it took you', (6 - guess_attempts), 'guesses')
                 break
